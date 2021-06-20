@@ -56,7 +56,7 @@
     code cannot run, this combination does not work
   - Detector: SHITOMASI, Descriptor: SIFT
         
-    code cannot run, this combination does not work
+    112 109 104 103 99 101 97 107 97 
     
   - Detector: HARRIS, Descriptor: BRISK
             
@@ -75,7 +75,7 @@
     code cannot run, this combination does not work
   - Detector: HARRIS, Descriptor: SIFT
                         
-    code cannot run, this combination does not work
+    46 47 50 52 51 48 52 59 55 
   - Detector: FAST, Descriptor: BRISK
   
     97 104 101 98 85 107 107 100 100 
@@ -96,7 +96,7 @@
     code cannot run, this combination does not work
   - Detector: FAST, Descriptor: SIFT
                         
-    code cannot run, this combination does not work
+    118 123 112 120 114 119 123 117 103 
   - Detector: BRISK, Descriptor: BRISK
     
     171 176 157 176 174 188 173 171 184 
@@ -114,7 +114,7 @@
     code cannot run, this combination does not work
   - Detector: BRISK, Descriptor: SIFT
                           
-    code cannot run, this combination does not work
+    184 193 171 183 173 196 196 178 185 
   - Detector: ORB, Descriptor: BRISK
     
     73 74 79 85 79 92 90 88 91 
@@ -127,6 +127,9 @@
   - Detector: ORB, Descriptor: FREAK
     
     42 36 45 47 44 51 52 49 55 
+  - Detector: ORB, Descriptor: SIFT
+  
+    67 79 78 80 82 95 95 94 94
   - Detector: AKAZE, Descriptor: BRISK
     
     137 125 129 129 131 132 142 146 144 
@@ -146,7 +149,7 @@
     138 138 133 127 129 146 147 151 150 
   - Detector: AKAZE, Descriptor: SIFT
       
-    code cannot run, this combination does not work
+    135 136 130 138 137 147 148 155 151 
   - Detector: SIFT, Descriptor: BRISK
     
     64 66 62 66 59 64 64 67 80 
@@ -163,5 +166,13 @@
     
     code cannot run, this combination does not work
   - Detector: SIFT, Descriptor: SIFT
+    
+    82 81 85 95 90 82 83 103 105 
 - MP.9 Performance Evaluation 3
   - The spreadsheet can be found [here](https://docs.google.com/spreadsheets/d/1uxNoxjb7APyzbs_wWEZHTDqBL1qvrkhQDfxyXEYi0ek/edit?usp=sharing)
+  - TOP3 detector / descriptor combinations:  
+    1. FAST and BRISK
+    2. FAST and BRIEF
+    3. FAST and ORB
+    
+    I chose these three combinations because they run with the shortest period of time.
