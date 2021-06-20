@@ -63,6 +63,9 @@ int main(int argc, const char *argv[])
         DataFrame frame;
         frame.cameraImg = imgGray;
         dataBuffer.push_back(frame);
+        if(dataBuffer.size()>dataBufferSize){
+            dataBuffer.erase(dataBuffer.begin());
+        }
 
         //// EOF STUDENT ASSIGNMENT
         cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
@@ -71,7 +74,7 @@ int main(int argc, const char *argv[])
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI";
+        string detectorType = "SIFT";
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
@@ -81,9 +84,29 @@ int main(int argc, const char *argv[])
         {
             detKeypointsShiTomasi(keypoints, imgGray, false);
         }
-        else
+        else if (detectorType.compare("HARRIS") == 0)
         {
-            //...
+            detKeypointsHarris(keypoints, imgGray, false);
+        }
+        else if (detectorType.compare("FAST") == 0)
+        {
+            detKeypointsFAST(keypoints, imgGray, false);
+        }
+        else if (detectorType.compare("BRISK") == 0)
+        {
+            detKeypointsBRISK(keypoints, imgGray, false);
+        }
+        else if (detectorType.compare("ORB") == 0)
+        {
+            detKeypointsORB(keypoints, imgGray, false);
+        }
+        else if (detectorType.compare("AKAZE") == 0)
+        {
+            detKeypointsAKAZE(keypoints, imgGray, false);
+        }
+        else if (detectorType.compare("SIFT") == 0)
+        {
+            detKeypointsSIFT(keypoints, imgGray, false);
         }
         //// EOF STUDENT ASSIGNMENT
 
@@ -96,8 +119,20 @@ int main(int argc, const char *argv[])
         if (bFocusOnVehicle)
         {
             // ...
-        }
+            vector<cv::KeyPoint> rectkeypoints;
 
+            for(auto rect = keypoints.begin(); rect != keypoints.end();rect++)
+            {
+
+                if (vehicleRect.contains(rect->pt))
+
+                    rectkeypoints.push_back(*rect);
+
+            }
+
+            keypoints = rectkeypoints;
+        }
+        //cout << "number of keypoints on the preceding vehicle n=" << keypoints.size() << endl;
         //// EOF STUDENT ASSIGNMENT
 
         // optional : limit number of keypoints (helpful for debugging and learning)
@@ -125,7 +160,7 @@ int main(int argc, const char *argv[])
         //// -> BRIEF, ORB, FREAK, AKAZE, SIFT
 
         cv::Mat descriptors;
-        string descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
+        string descriptorType = "SIFT"; // BRIEF, ORB, FREAK, AKAZE, SIFT
         descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
         //// EOF STUDENT ASSIGNMENT
 
@@ -142,7 +177,7 @@ int main(int argc, const char *argv[])
             vector<cv::DMatch> matches;
             string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
             string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
-            string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
+            string selectorType = "SEL_KNN";       // SEL_NN, SEL_KNN
 
             //// STUDENT ASSIGNMENT
             //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
@@ -158,7 +193,7 @@ int main(int argc, const char *argv[])
             (dataBuffer.end() - 1)->kptMatches = matches;
 
             cout << "#4 : MATCH KEYPOINT DESCRIPTORS done" << endl;
-
+            cout << "#4 : The number of matched points are"<< matches.size() << endl;
             // visualize matches between current and previous image
             bVis = true;
             if (bVis)
